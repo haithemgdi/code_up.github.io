@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هيثم دهيليس - خبير ومستشار تقني</title>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&display=swap');
+
+        :root {
+            --primary-color: #0ea5e9; /* Sky Blue */
+            --whatsapp-color: #25D366;
+            --dark-bg: #0b1120;
+            --surface-bg: #1e293b;
+            --border-color: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #9ca3af;
+            --font-main: 'Tajawal', sans-serif; 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--dark-bg);
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        .main-header {
+            background-color: rgba(11, 17, 32, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .main-header.scrolled {
+             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+             border-bottom: 1px solid var(--border-color);
+        }
+
+        .navbar { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 28px; color: var(--text-primary); text-decoration: none; font-weight: 800; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; margin-right: 30px; font-weight: 700; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--primary-color); }
+        .btn { display: inline-block; padding: 12px 30px; border: 2px solid var(--primary-color); color: var(--primary-color); border-radius: 8px; text-decoration: none; font-weight: 700; transition: all 0.3s ease; }
+        .btn:hover { background-color: var(--primary-color); color: #fff; font-weight: 800;}
+        .btn-whatsapp { border-color: var(--whatsapp-color); color: var(--whatsapp-color); }
+        .btn-whatsapp:hover { background-color: var(--whatsapp-color); color: #fff; }
+        .btn-whatsapp svg { width: 20px; height: 20px; margin-left: 10px; vertical-align: middle; }
+
+        .hero { padding: 120px 0; text-align: center; }
+        .hero h1 { font-size: 60px; color: var(--text-primary); margin-bottom: 15px; font-weight: 900; }
+        .hero .subtitle { color: var(--primary-color); font-size: 28px; font-weight: 700; margin-bottom: 25px; height: 40px;}
+        .hero p { max-width: 700px; margin: 0 auto 40px auto; font-size: 20px; }
+        
+        .section { padding: 100px 0; opacity: 0; transform: translateY(50px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .section.visible { opacity: 1; transform: translateY(0); }
+
+        .section-light { background-color: var(--surface-bg); }
+        .section-title { text-align: center; margin-bottom: 60px; font-size: 42px; color: var(--text-primary); font-weight: 800; }
+
+        .about-content { display: flex; align-items: center; gap: 60px; }
+        .about-image { flex-basis: 250px; flex-shrink: 0; text-align: center; }
+        .about-image img { width: 220px; height: 220px; border-radius: 50%; object-fit: cover; border: 5px solid var(--surface-bg); box-shadow: 0 0 30px rgba(14, 165, 233, 0.2); }
+        .about-text h3 { font-size: 32px; color: var(--text-primary); margin-bottom: 20px; line-height: 1.4; font-weight: 800; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
+        .stat-item h4 { font-size: 52px; font-weight: 900; color: var(--primary-color); }
+        .stat-item p { font-size: 18px; font-weight: 600; color: var(--text-secondary); }
+        
+        /* --- New Tabs System for Courses --- */
+        .course-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .tab-btn {
+            background-color: var(--surface-bg);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .tab-btn:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .course-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        .course-item {
+            background-color: var(--dark-bg);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .course-item-icon {
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+        .course-item h4 {
+            font-size: 20px;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        /* --- End of Tabs System --- */
+
+        .contact-section { text-align: center; }
+        .contact-section p { font-size: 20px; max-width: 600px; margin: 0 auto 40px auto; }
+        .btn-whatsapp { border-color: var(--whatsapp-color); color: var(--whatsapp-color); font-size: 20px; padding: 15px 40px; }
+        .btn-whatsapp:hover { background-color: var(--whatsapp-color); color: #fff; }
+        .btn-whatsapp svg { width: 20px; height: 20px; margin-left: 10px; vertical-align: middle; }
+
+        .footer { text-align: center; padding: 40px 0; border-top: 1px solid var(--border-color); margin-top: 60px; }
+        
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 20px; }
+            .nav-links { display: none; } 
+            .hero h1 { font-size: 42px; }
+            .hero .subtitle { font-size: 22px; }
+            .about-content { flex-direction: column; text-align: center;}
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header" id="main-header">
+        <nav class="navbar container">
+            <a href="#" class="logo">هيثم دهيليس</a>
+            <div class="nav-links">
+                <a href="#about">من أنا</a>
+                <a href="#courses">الدورات</a>
+                <a href="#contact">تواصل</a>
+            </div>
+            <a href="https://wa.me/213777193012" target="_blank" class="btn">تواصل واتساب</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>تعلم التكنولوجيا، ابنِ المستقبل، وحصّن عالمك الرقمي</h1>
+                <div class="subtitle"><span id="typed-subtitle"></span></div>
+                <p>أنا شريكك التقني لبناء حلول رقمية آمنة، ومرشدك لاكتساب مهارات تكنولوجية تفتح لك أبواب المستقبل.</p>
+                <a href="#courses" class="btn">اكتشف الدورات والخدمات</a>
+            </div>
+        </section>
+
+        <section id="about" class="section section-light reveal">
+            <div class="container">
+                <div class="about-content"> 
+                    <div class="about-image">
+                        <img src="https://www.anae.dz/media/ID_PHOTO/100003080031725662/16676KDUV0.png" alt="صورة هيثم دهيليس الشخصية">
+                    </div>
+                    <div class="about-text">
+                        <h3>خبير تقني شغوف ببناء جسور الثقة في العالم الرقمي</h3>
+                        <p>مهمتي هي تحويل التعقيدات التقنية في مجالات مثل الأمن السيبراني والبرمجة إلى حلول عملية وقوية تخدم أهدافك مباشرةً. بصفتي مقاول ذاتي معتمد، ألتزم بتقديم خدمات احترافية ضمن إطار قانوني واضح، مما يضمن لك الموثوقية والشفافية في كل خطوة. سواء كنت تبحث عن تأمين مشروعك، تطوير موقعك، أو تعلم مهارة جديدة، أنا هنا لأكون مرشدك وشريكك في النجاح.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="stats" class="section reveal">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item"><h4 class="counter" data-goal="5">0</h4><p>سنوات من الخبرة</p></div>
+                    <div class="stat-item"><h4 class="counter" data-goal="25">0</h4><p>مشروع مكتمل</p></div>
+                    <div class="stat-item"><h4 class="counter" data-goal="100">0</h4><p>تقييم إيجابي</p></div>
+                    <div class="stat-item"><h4 class="counter" data-goal="1200">0</h4><p>كوب قهوة</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="courses" class="section section-light reveal">
+            <div class="container">
+                <h2 class="section-title">الدورات والخدمات المقدمة</h2>
+                
+                <div class="course-tabs">
+                    <button class="tab-btn active" data-target="info">الإعلام الآلي</button>
+                    <button class="tab-btn" data-target="programming">البرمجة</button>
+                    <button class="tab-btn" data-target="security">الأمن السيبراني</button>
+                    <button class="tab-btn" data-target="ai">الذكاء الاصطناعي</button>
+                    <button class="tab-btn" data-target="design">التصميم الرقمي</button>
+                </div>
+
+                <div id="info" class="tab-content active">
+                    <div class="course-list">
+                        <div class="course-item"><div class="course-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 8l-2.147 2.146a.5.5 0 0 0 .708.708l3-3zM1.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L2.707 8l2.147 2.146a.5.5 0 1 1-.708.708l-3-3zM8.646 4.146a.5.5 0 0 0-.708 0l-3 8a.5.5 0 0 0 .708.708l3-8a.5.5 0 0 0 0-.708z"/></svg></div><div><h4>مدخل إلى عالم الحاسوب</h4><p>فهم المكونات الأساسية (Hardware) والبرامج (Software).</p></div></div>
+                        <div class="course-item"><div class="course-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M6.555 3.596a.5.5 0 0 1 .788-.42l3.427 2.063a.5.5 0 0 1 0 .84l-3.427 2.063a.5.5 0 0 1-.788-.42V3.596z"/><path d="M12 2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM4 1a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V4a3 3 0 0 0-3-3H4z"/></svg></div><div><h4>إتقان نظام التشغيل ويندوز</h4><p>تعلم إدارة الإعدادات، الملفات، والبرامج بكفاءة.</p></div></div>
+                        <div class="course-item"><div class="course-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/><path d="M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0zM8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0z"/></svg></div><div><h4>أساسيات الإنترنت والتصفح الآمن</h4><p>مهارات البحث الفعال، البريد الإلكتروني، والحماية من المخاطر.</p></div></div>
+                        <div class="course-item"><div class="course-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M5 4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1H5V4z"/><path d="M4 3.5a1.5 1.5 0 0 1 1.5-1.5h5A1.5 1.5 0 0 1 12 3.5v10a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 13.5v-10zM2 5.5a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5h-1z"/></svg></div><div><h4>Microsoft Word: تحرير المستندات الاحترافي</h4><p>من التنسيق البسيط إلى إنشاء تقارير احترافية وفهارس آلية.</p></div></div>
+                        <div class="course-item"><div class="course-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M5 4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1H5V4z"/><path d="M4 3.5a1.5 1.5 0 0 1 1.5-1.5h5A1.5 1.5 0 0 1 12 3.5v10a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 13.5v-10zM2 5.5a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5h-1z"/></svg></div><div><h4>Microsoft Excel: تحليل البيانات</h4><p>تعلم الدوال، الجداول المحورية (Pivot Tables)، وتصوير البيانات.</p></div></div>
+                        <div class="course-item"><div class="course-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M5 4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1H5V4z"/><path d="M4 3.5a1.5 1.5 0 0 1 1.5-1.5h5A1.5 1.5 0 0 1 12 3.5v10a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 13.5v-10zM2 5.5a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5h-1z"/></svg></div><div><h4>Microsoft PowerPoint: تصميم العروض المؤثرة</h4><p>فن تصميم الشرائح وتقديمها بطريقة احترافية ومقنعة.</p></div></div>
+                        <div class="course-item"><div class="course-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2a.5.5 0 0 1-.496 0l-3.75-2.143a.5.5 0 0 1-.252-.434V9.07a.5.5 0 0 1 .252-.434l3.498-2V3.07a.5.5 0 0 1 .252-.434L7.752.066zM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504zm1.5 2.142-2.742 1.567 2.742 1.567 2.742-1.567-2.742-1.567zm4.5-.857L8.5 9.649l-2.742-1.567L8.5 6.516l2.742 1.567z"/></svg></div><div><h4>صيانة الحاسوب وحل المشاكل</h4><p>تشخيص الأعطال الشائعة، تركيب المكونات، وتحسين أداء الجهاز.</p></div></div>
+                        <div class="course-item"><div class="course-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M6 .314a.5.5 0 0 1 .5.5v5.078a.5.5 0 0 1-.354.478L1.854 8.5a.5.5 0 0 1-.708-.708L4 5.522V1.42a.5.5 0 0 1 .354-.478l1.292-.858a.5.5 0 0 1 .354 0zM10 .314a.5.5 0 0 1 .354 0l1.292.858A.5.5 0 0 1 12 1.42v4.102l2.854-2.276a.5.5 0 1 1 .708.708L12.707 6.5a.5.5 0 0 1-.354.478V12.5a.5.5 0 0 1-1 0V6.978a.5.5 0 0 1 .354-.478L14.854 4.5a.5.5 0 1 1 .708.708L12.707 7.5a.5.5 0 0 1-.354.478V13.5a.5.5 0 0 1-1 0V7.978a.5.5 0 0 1 .354-.478L14.854 5.5a.5.5 0 0 1 .708.708L12.707 8.5a.5.5 0 0 1-.354.478V14.5a.5.5 0 0 1-1 0V8.978a.5.5 0 0 1 .354-.478L15 6.5a.5.5 0 1 1 .708.708L12.854 9.5a.5.5 0 0 1-.354.478V15.5a.5.5 0 0 1-1 0v-5.022l-2.854 2.276a.5.5 0 1 1-.708-.708L11 9.522V1.42a.5.5 0 0 1-.354-.478l-1.292-.858a.5.5 0 0 1-.354 0z"/></svg></div><div><h4>مبادئ الشبكات الحاسوبية</h4><p>فهم بروتوكولات الإنترنت (TCP/IP) وكيفية عمل الشبكات المحلية.</p></div></div>
+                        <div class="course-item"><div class="course-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1c-1.573 0-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4s.875 1.755 1.904 2.223C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777C13.125 5.755 14 5.007 14 4s-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1z"/><path d="M2 7.161c0 1.007.875 1.755 1.904 2.223C4.978 9.889 6.427 10.177 8 10.177s3.022-.289 4.096-.777C13.125 8.916 14 8.168 14 7.161v-1.13c-.822.37-2.23.64-3.904.64-1.675 0-3.082-.27-3.904-.64v1.13z"/><path d="M2 11.161c0 1.007.875 1.755 1.904 2.223C4.978 13.889 6.427 14.177 8 14.177s3.022-.289 4.096-.777C13.125 12.916 14 12.168 14 11.161v-1.13c-.822.37-2.23.64-3.904.64-1.675 0-3.082-.27-3.904-.64v1.13z"/></svg></div><div><h4>مدخل إلى قواعد البيانات و SQL</h4><p>أساسيات تخزين وتنظيم البيانات، وكيفية استرجاعها بلغة SQL.</p></div></div>
+                        <div class="course-item"><div class="course-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10.5a.5.5 0 0 1 0-1h2.188C13.938 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-4.406 3.342A.5.5 0 0 1 3 4.5v.5H2.688C1.063 5 0 6.012 0 7.227 0 8.383.98 9.355 2.22 9.355h2.072a.5.5 0 0 1 0 1H2.22C.994 10.355 0 9.528 0 8.355c0-1.413 1.253-2.542 2.831-2.542A2.24 2.24 0 0 1 4.406 1.342z"/></svg></div><div><h4>أساسيات الحوسبة السحابية (Cloud)</h4><p>مقدمة لخدمات AWS, Azure, Google Cloud وكيف تغير عالم التكنولوجيا.</p></div></div>
+                    </div>
+                </div>
+
+                <div id="programming" class="tab-content">
+                    <p style="text-align:center;">محتوى دورات البرمجة سيتم إضافته هنا...</p>
+                </div>
+                <div id="security" class="tab-content">
+                     <p style="text-align:center;">محتوى دورات الأمن السيبراني سيتم إضافته هنا...</p>
+                </div>
+                <div id="ai" class="tab-content">
+                     <p style="text-align:center;">محتوى دورات الذكاء الاصطناعي سيتم إضافته هنا...</p>
+                </div>
+                <div id="design" class="tab-content">
+                     <p style="text-align:center;">محتوى دورات التصميم الرقمي سيتم إضافته هنا...</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact" class="section reveal">
+            <div class="container contact-section">
+                <h2 class="section-title">هل أنت جاهز للخطوة التالية؟</h2>
+                <p>تواصل معي مباشرة عبر واتساب لمناقشة مشروعك، طلب خدمة، أو الاستفسار عن الدورات. أنا هنا للاستماع إليك ومساعدتك.</p>
+                <a href="https://wa.me/213777193012?text=مرحباً%20هيثم،%20لقد%20رأيت%20موقعك%20وأود%20الاستفسار%20عن%20الدورات." target="_blank" class="btn btn-whatsapp" style="font-size: 20px; padding: 15px 40px;">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.3-8.8-98.1-25.4l-7-4.2-72.5 19 19.3-70.6-4.6-7.3c-18.1-28.9-28.2-61.6-28.2-95.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5c-.1 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+                    <span>تواصل معي عبر واتساب</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>جميع الحقوق محفوظة &copy; <bdi>2025</bdi> - أكاديمية هيثم دهيليس التقنية</p>
+        </div>
+    </footer>
+
+    <script>
+    //<![CDATA[
+    document.addEventListener('DOMContentLoaded', function () {
+        // Typing effect
+        new Typed('#typed-subtitle', {
+            strings: ['مهندس في الأمن السيبراني', 'مبرمج لأكثر من 15 لغة', 'أستاذ دورات الاعلام الألي'],
+            typeSpeed: 60,
+            backSpeed: 30,
+            backDelay: 2000,
+            loop: true,
+            smartBackspace: true
+        });
+
+        // Reveal on Scroll Animation
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.section').forEach(section => { revealObserver.observe(section); });
+
+        // Counter Animation
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const goal = parseInt(counter.dataset.goal);
+                    let count = 0;
+                    const duration = 2000;
+                    const step = Math.max(1, Math.round(goal / (duration / 16)));
+                    const timer = setInterval(() => {
+                        count += step;
+                        if (count > goal) count = goal;
+                        counter.innerText = count;
+                        if (count === goal) clearInterval(timer);
+                    }, 16);
+                    observer.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.8 });
+        document.querySelectorAll('.counter').forEach(counter => { counterObserver.observe(counter); });
+        
+        // Header Scroll Effect
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Tabs System for Courses
+        const tabs = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = document.getElementById(tab.dataset.target);
+
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                tabContents.forEach(content => content.classList.remove('active'));
+                target.classList.add('active');
+            });
+        });
+    });
+    //]]>
+    </script>
+
+</body>
+</html>
